@@ -5,7 +5,7 @@ This repository contains a sample Java EE web application leveraging the [SAML 2
 Once an Apache Syncope deployment - enabled with such extension - is properly configured, and the Syncope [Core](http://syncope.apache.org/docs/reference-guide.html#core) application is running, the Syncope [Admin UI](http://syncope.apache.org/docs/reference-guide.html#admin-console-component) and the Syncope [Enduser UI](http://syncope.apache.org/docs/reference-guide.html#enduser-component) can be enabled to allow SAML-based SSO.
 The global result is that Admin UI and / or Enduser UI can be accessed after user authentication against (one of configured) SAML 2.0 Identity Provider(s).
 
-**The web application in this repository shows how to enable any 3rd party Java EE web application to act like as the Syncope Admin UI and Enduser UI, e.g. to allow SAML-based SSO.**
+**The web application in this repository shows how to enable any third party Java EE web application to act like as the Syncope Admin UI and Enduser UI, e.g. to allow SAML-based SSO.**
 
 # Preparation
 
@@ -22,14 +22,17 @@ _The procedure above is just the most straightforward to get quickly Apache Sync
 ### Import SAML 2.0 Identity Provider metadata into Syncope
 
 From Admin UI, go to `Extensions > SAML 2.0 SP > Identity Providers` and click on the `+` button on the lower right corner: you can then upload the metadata provided by your SAML 2.0 Identity Provider of choice.
+There are free ones available, as [TestShib](https://www.testshib.org/) or [SSOCircle](https://www.ssocircle.com), or you might want to try yourself with a [Docker-ized SimpleSAMLPHP instance](https://hub.docker.com/r/kristophjunge/test-saml-idp/).
 
 Now click on the pencil icon to finetune the IdP configuration. You can optionally change its label from the first screen, but the most important setting is revealed after hitting the `Next` button: you will need to define the mapping between internal users (e.g. users in Apache Syncope) and external users (e.g. users from the IdP); some sample values are reported below:
 
-IdP | Internal attribute | External attribute
+SAML 2.0 Identity Provider | Internal attribute | External attribute
 --- | --- | ---
 [TestShib](https://www.testshib.org/) | `username` | `uid`
 [SSOCircle](https://www.ssocircle.com) | `email` | `EmailAddress`
 [Docker-ized SimpleSAMLPHP instance](https://hub.docker.com/r/kristophjunge/test-saml-idp/) | `email` | `email`
+
+Finally, be sure that users exist in Syncope matching the ones you are targeting from Identity Providers.
 
 ## Java EE web application
 
@@ -44,6 +47,6 @@ At this point the web application is available at http://localhost:8080/syncopeS
 
 Access http://localhost:8080/syncopeSAML2SP/saml2sp/metadata and an XML response will be shown.
 
-Now hand off such XML content to your reference SAML 2.0 Identity Provider; there are free ones available, as [TestShib](https://www.testshib.org/) or [SSOCircle](https://www.ssocircle.com), or you might want to try yourself with a [Docker-ized SimpleSAMLPHP instance](https://hub.docker.com/r/kristophjunge/test-saml-idp/).
+Now hand off such XML content to your reference SAML 2.0 Identity Provider, as said above.
 
 _Please note that the actual URLs contained in the metadata will automatically adjust depending on the hostname referenced for access: within this regard, using `localhost` is discouraged in favor of FQDN as http://your.host.name:8080/syncopeSAML2SP/saml2sp/metadata_
