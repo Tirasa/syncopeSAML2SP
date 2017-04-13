@@ -41,12 +41,19 @@ Adjust the content of `src/main/resources/saml2sp-agent.properties` to match you
 ```
 $ mvn tomcat7:run
 ```
-At this point the web application is available at http://localhost:8080/syncopeSAML2SP/
+At this point the web application is available at http://your.host.name:8080/syncopeSAML2SP/
 
 ### Send metadata to the SAML 2.0 Identity Provider
 
-Access http://localhost:8080/syncopeSAML2SP/saml2sp/metadata and an XML response will be shown.
+Access http://your.host.name:8080/syncopeSAML2SP/saml2sp/metadata and an XML response will be shown.
 
 Now hand off such XML content to your reference SAML 2.0 Identity Provider, as said above.
 
 _Please note that the actual URLs contained in the metadata will automatically adjust depending on the hostname referenced for access: within this regard, using `localhost` is discouraged in favor of FQDN as http://your.host.name:8080/syncopeSAML2SP/saml2sp/metadata_
+
+# Run
+
+1. Browse to http://your.host.name:8080/syncopeSAML2SP/saml2sp/login
+1. You will be redirected to the selected IdP's login form
+1. Log in with the provided credentials
+1. You will be greeted by a similar page (this was obtained from TestShib after logging in as `myself`): ![GitHub Logo](/images/TestShib.png)
