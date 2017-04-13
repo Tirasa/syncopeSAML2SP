@@ -57,3 +57,18 @@ _Please note that the actual URLs contained in the metadata will automatically a
 1. You will be redirected to the selected IdP's login form
 1. Log in with the provided credentials
 1. You will be greeted by a similar page (this was obtained from TestShib after logging in as `myself`): ![GitHub Logo](/images/TestShib.png)
+
+## Exploit
+
+The sample content shown above is the result of the default landing page being used in case of successful login.
+It proves that the SAML-based SSO went out fine, and that a [valid JWT for further operations with Syncope Core](https://ci.apache.org/projects/syncope/reference-guide.html#rest-authentication-and-authorization) is available.
+
+To be effecive in real cases, however, some items should be addressed:
+
+* configure the various landing pages to match your actual web application URLs - see [this web.xml](https://github.com/apache/syncope/blob/2_0_X/fit/console-reference/src/main/webapp/WEB-INF/web.xml#L33-L49) for reference:
+  * `saml2sp.login.success.url` - which URL, related to the `saml2sp/` path, the user should be redirect to, in case of successful login
+  * `saml2sp.login.error.url` - which URL, related to the `saml2sp/` path, the user should be redirect to, in case of login errors
+  * `saml2sp.logout.success.url` - which URL, related to the `saml2sp/` path, the user should be redirect to, in case of successful logout
+  * `saml2sp.logout.error.url` - which URL, related to the `saml2sp/` path, the user should be redirect to, in case of logout errors
+* make the web application, after successful login, to fetch the JWT obtained at the end of the SAML exchange: it is stored in the `saml2sp.jwt` session attribute
+* if the IdP of choice is supporting it, log out by browsing to http://your.host.name:8080/syncopeSAML2SP/saml2sp/logout
