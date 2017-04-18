@@ -10,7 +10,7 @@
   <name>syncopeSAML2SP</name>
 
   <properties>
-    <syncope.version>2.0.3-SNAPSHOT</syncope.version>
+    <syncope.version>2.0.3</syncope.version>
     
     <conf.directory>${project.build.directory}/classes</conf.directory>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
